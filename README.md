@@ -1,21 +1,23 @@
-# Crackerbarrel.py  [![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://travis-ci.org/) ![Language](https://img.shields.io/badge/python-3-yellow.svg) [![License](https://img.shields.io/badge/liscense-MIT-yellow.svg)](https://opensource.org/licenses/MIT) 
+# crackerbarrel.py  [![Language](https://img.shields.io/badge/python-3-yellow.svg) [![License](https://img.shields.io/badge/liscense-MIT-yellow.svg)](https://opensource.org/licenses/MIT) 
 
-Have you ever been to a cracker barrel?
-
-Have you ever played that peg game?
-
-Well, we have. This python script serves to find out what exactly *is* the answer to that puzzle.
+Python module for playing and solving the cracker barrel puzzle both manually and automatically.
 
 ## Getting Started
 
-Run `python3 crackerbarrel.py -h` in your terminal of choice to see all the options.
+ To enter manual mode (for playing the game yourself!) simply run `python crackerbarrel.py` in a terminal.
+ 
+ Optionally, you can inclue the flags:
+ 
+ `--solve, -s`: Takes optional positional argument n which is 1 by default. Finds nth solution.
+ 
+ `--all, -a`: Finds and counts all 1-peg solutions. May take a little while to run.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
 
 ## Acknowledgments
 
 * Thank you to argparse
 * Thank you to cracker barrel
-* Big thank you to Young King Dave (rip) for inventing big doinks
+* Big thank you to gray for tricking out my readme
