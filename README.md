@@ -1,21 +1,21 @@
-# I'm healthy mmhm I'm wealthy huhuh
+# Crackerbarrel.py  [![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://travis-ci.org/) ![Language](https://img.shields.io/badge/python-3-yellow.svg) [![License](https://img.shields.io/badge/liscense-MIT-yellow.svg)](https://opensource.org/licenses/MIT) 
 
-##  got medical
-kush and edibles
+Have you ever been to a cracker barrel?
 
-smoking vegetables
+Have you ever played that peg game?
 
-ay you know that
+Well, we have. This python script serves to find out what exactly *is* the answer to that puzzle.
 
-rockin them throwbacks
+## Getting Started
 
-king dave where yall hoes at
+Run `python3 crackerbarrel.py -h` in your terminal of choice to see all the options.
 
-they be ridin my wave 
-##### wave 
-###### wave
-but they cant stop me
+## License
 
-i hit her with an eggplant emoji
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
-# scoop yo girl up get some veggie stromboli
+## Acknowledgments
+
+* Thank you to argparse
+* Thank you to cracker barrel
+* Big thank you to Young King Dave (rip) for inventing big doinks
