@@ -6,7 +6,7 @@ Python module for playing and solving the cracker barrel puzzle both manually an
 
  To enter manual mode (for playing the game yourself!) simply run `python crackerbarrel.py` in a terminal.
  
- Optionally, you can inclue the flags:
+ Optionally, you can inclue the following flags:
  
  `--solve, -s`: Takes optional positional argument n which is 1 by default. Finds nth solution.
  
