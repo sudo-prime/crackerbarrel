@@ -1,4 +1,4 @@
-# crackerbarrel.py  ![Language](https://img.shields.io/badge/python-3-yellow.svg) [![License](https://img.shields.io/badge/liscense-MIT-yellow.svg)](https://opensource.org/licenses/MIT) 
+# crackerbarrel.py  [![Language](https://img.shields.io/badge/python-3-yellow.svg) [![License](https://img.shields.io/badge/liscense-MIT-yellow.svg)](https://opensource.org/licenses/MIT) 
 
 Python module for playing and solving the cracker barrel puzzle both manually and automatically.
 
