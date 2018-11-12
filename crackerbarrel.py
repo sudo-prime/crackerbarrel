@@ -3,101 +3,102 @@ import argparse
 import math
 
 class Hole:
- 	def __init__(self, x, y):
- 	 	self.adjacent = {
- 	 	 	"upLeft" 	: None,
- 	 	 	"upRight"   : None,
- 	 	 	"left" 	  : None,
- 	 	 	"right" 	 : None,
- 	 	 	"downLeft"  : None,
- 	 	 	"downRight" : None
- 	 	}
- 	 	self.hasPeg = True
- 	 	self.x = x
- 	 	self.y = y
+	def __init__(self, x, y):
+		self.adjacent = {
+			"upLeft"	: None,
+			"upRight"   : None,
+			"left"	  : None,
+			"right"	 : None,
+			"downLeft"  : None,
+			"downRight" : None
+		}
+		self.hasPeg = True
+		self.x = x
+		self.y = y
 
 class PegState:
- 	def __init__(self, graph, moves):
- 	 	self.graph = graph
- 	 	self.moves = moves
- 	 	
- 	def __copy__(self):
- 	 	return type(self)(deepcopy(self.graph), copy(self.moves))
+	def __init__(self, graph, moves):
+		self.graph = graph
+		self.moves = moves
+		
+	def __copy__(self):
+		return type(self)(deepcopy(self.graph), copy(self.moves))
 
- 	def print(self):
- 	 	print("    {} 	".format("o" if self.graph[0][0].hasPeg else "."))
- 	 	print("   {} {}  ".format("o" if self.graph[1][0].hasPeg else ".",
- 	 	 	 	 	 	 	 	  "o" if self.graph[1][1].hasPeg else "."))
- 	 	print("  {} {} {}".format("o" if self.graph[2][0].hasPeg else ".",
- 	 	 	 	 	 	 	 	  "o" if self.graph[2][1].hasPeg else ".",
- 	 	 	 	 	 	 	 	  "o" if self.graph[2][2].hasPeg else "."))
- 	 	print(" {} {} {} {}".format("o" if self.graph[3][0].hasPeg else ".",
- 	 	 	 	 	 	 	 	 	"o" if self.graph[3][1].hasPeg else ".",
- 	 	 	 	 	 	 	 	 	"o" if self.graph[3][2].hasPeg else ".",
- 	 	 	 	 	 	 	 	 	"o" if self.graph[3][3].hasPeg else "."))
- 	 	print("{} {} {} {} {}".format("o" if self.graph[4][0].hasPeg else ".",
- 	 	 	 	 	 	 	 	 	  "o" if self.graph[4][1].hasPeg else ".",
- 	 	 	 	 	 	 	 	 	  "o" if self.graph[4][2].hasPeg else ".",
- 	 	 	 	 	 	 	 	 	  "o" if self.graph[4][3].hasPeg else ".",
- 	 	 	 	 	 	 	 	 	  "o" if self.graph[4][4].hasPeg else "."))
+	def print(self):
+		print("0      {}	".format("o" if self.graph[0][0].hasPeg else "."))
+		print("1     {} {}  ".format("o" if self.graph[1][0].hasPeg else ".",
+									 "o" if self.graph[1][1].hasPeg else "."))
+		print("2    {} {} {}".format("o" if self.graph[2][0].hasPeg else ".",
+									 "o" if self.graph[2][1].hasPeg else ".",
+									 "o" if self.graph[2][2].hasPeg else "."))
+		print("3   {} {} {} {}".format("o" if self.graph[3][0].hasPeg else ".",
+									   "o" if self.graph[3][1].hasPeg else ".",
+									   "o" if self.graph[3][2].hasPeg else ".",
+									   "o" if self.graph[3][3].hasPeg else "."))
+		print("4  {} {} {} {} {}".format("o" if self.graph[4][0].hasPeg else ".",
+										 "o" if self.graph[4][1].hasPeg else ".",
+										 "o" if self.graph[4][2].hasPeg else ".",
+										 "o" if self.graph[4][3].hasPeg else ".",
+										 "o" if self.graph[4][4].hasPeg else "."))
+		print("   0 1 2 3 4")
 
- 	def constructStartState(self):
- 	 	# Create all hole objects
- 	 	for i in range(0, 5):
- 	 	 	row = []
- 	 	 	for j in range(0, i + 1):
- 	 	 	 	current = Hole(i, j)
- 	 	 	 	row.append(current)
- 	 	 	self.graph.append(row)
- 	 	
- 	 	# Link them together via fields
- 	 	for i in range(0, len(self.graph)):
- 	 	 	for j in range(0, len(self.graph[i])):
- 	 	 	 	hole = self.graph[i][j]
- 	 	 	 	if j > 0:
- 	 	 	 	 	hole.adjacent["upLeft"] = self.graph[i-1][j-1]
- 	 	 	 	 	hole.adjacent["left"]   = self.graph[i][j-1]
- 	 	 	 	if i - j > 0:
- 	 	 	 	 	hole.adjacent["upRight"] = self.graph[i-1][j]
- 	 	 	 	 	hole.adjacent["right"]   = self.graph[i][j+1]
- 	 	 	 	if i < 4:
- 	 	 	 	 	hole.adjacent["downLeft"]  = self.graph[i+1][j]
- 	 	 	 	 	hole.adjacent["downRight"] = self.graph[i+1][j+1]
- 	 	return self
- 	
- 	def countPegs(self):
- 	 	count = 0
- 	 	for i in range(0, 5):
- 	 	 	for j in range(0, i + 1):
- 	 	 	 	if self.graph[i][j].hasPeg: count += 1
- 	 	return count
- 	
- 	def findAllValidMoves(self):
- 	 	moves = []
- 	 	for i in range(0, 5):
- 	 	 	for j in range(0, i + 1):
- 	 	 	 	origin = self.graph[i][j]
- 	 	 	 	if origin.hasPeg:
- 	 	 	 	 	for key in origin.adjacent.keys():
- 	 	 	 	 	 	if origin.adjacent[key] != None:
- 	 	 	 	 	 	 	if origin.adjacent[key].hasPeg and origin.adjacent[key].adjacent[key] != None:
- 	 	 	 	 	 	 	 	if not origin.adjacent[key].adjacent[key].hasPeg:
- 	 	 	 	 	 	 	 	 	# Found a valid move!
- 	 	 	 	 	 	 	 	 	fromPos = (origin.x, origin.y)
- 	 	 	 	 	 	 	 	 	midPos  = (origin.adjacent[key].x, origin.adjacent[key].y)
- 	 	 	 	 	 	 	 	 	toPos   = (origin.adjacent[key].adjacent[key].x, origin.adjacent[key].adjacent[key].y)
- 	 	 	 	 	 	 	 	 	moves.append(Move(fromPos, midPos, toPos))
- 	 	return moves
- 	
- 	def perform(self, move):
- 	 	self.moves.append(move)
- 	 	origin = self.graph[move.fromPos[0]][move.fromPos[1]]
- 	 	middle = self.graph[move.midPos[0]][move.midPos[1]]
- 	 	target = self.graph[move.toPos[0]][move.toPos[1]]
- 	 	origin.hasPeg = False
- 	 	middle.hasPeg = False
- 	 	target.hasPeg = True
- 	 	return self
+	def constructStartState(self):
+		# Create all hole objects
+		for i in range(0, 5):
+			row = []
+			for j in range(0, i + 1):
+				current = Hole(i, j)
+				row.append(current)
+			self.graph.append(row)
+		
+		# Link them together via fields
+		for i in range(0, len(self.graph)):
+			for j in range(0, len(self.graph[i])):
+				hole = self.graph[i][j]
+				if j > 0:
+					hole.adjacent["upLeft"] = self.graph[i-1][j-1]
+					hole.adjacent["left"]   = self.graph[i][j-1]
+				if i - j > 0:
+					hole.adjacent["upRight"] = self.graph[i-1][j]
+					hole.adjacent["right"]   = self.graph[i][j+1]
+				if i < 4:
+					hole.adjacent["downLeft"]  = self.graph[i+1][j]
+					hole.adjacent["downRight"] = self.graph[i+1][j+1]
+		return self
+	
+	def countPegs(self):
+		count = 0
+		for i in range(0, 5):
+			for j in range(0, i + 1):
+				if self.graph[i][j].hasPeg: count += 1
+		return count
+	
+	def findAllValidMoves(self):
+		moves = []
+		for i in range(0, 5):
+			for j in range(0, i + 1):
+				origin = self.graph[i][j]
+				if origin.hasPeg:
+					for key in origin.adjacent.keys():
+						if origin.adjacent[key] != None:
+							if origin.adjacent[key].hasPeg and origin.adjacent[key].adjacent[key] != None:
+								if not origin.adjacent[key].adjacent[key].hasPeg:
+									# Found a valid move!
+									fromPos = (origin.x, origin.y)
+									midPos  = (origin.adjacent[key].x, origin.adjacent[key].y)
+									toPos   = (origin.adjacent[key].adjacent[key].x, origin.adjacent[key].adjacent[key].y)
+									moves.append(Move(fromPos, midPos, toPos))
+		return moves
+	
+	def perform(self, move):
+		self.moves.append(move)
+		origin = self.graph[move.fromPos[0]][move.fromPos[1]]
+		middle = self.graph[move.midPos[0]][move.midPos[1]]
+		target = self.graph[move.toPos[0]][move.toPos[1]]
+		origin.hasPeg = False
+		middle.hasPeg = False
+		target.hasPeg = True
+		return self
 
 class Move():
 	def __init__(self, fromPos, midPos, toPos):
@@ -146,36 +147,36 @@ def solveAll(state):
 		if result != None: return result
 
 def manual(state):
- 	while state.countPegs() != 1:
- 	 	state.print()
- 	 	print("There are {} pegs remaining.".format(state.countPegs()))
- 	 	moves = state.findAllValidMoves()
- 	 	if not moves:
- 	 	 	print("No more moves, you lose! There were {} pegs left.".format(state.countPegs()))
- 	 	 	return
- 	 	movesReadable = ", ".join([str(move) for move in moves])
- 	 	print("The following moves are available: {}".format(movesReadable))
- 	 	pick = eval(input("Which move would you like to perform? [0-{}]: ".format(len(moves) - 1)))
- 	 	while pick < 0 or pick > len(moves) - 1:
- 	 	 	print("Input out of range.")
- 	 	 	print("The following moves are available: {}".format(movesReadable))
- 	 	 	pick = eval(input("Which move would you like to perform? [0-{}]: ".format(len(moves) - 1)))
- 	 	move = moves[pick]
- 	 	state.perform(move)
- 	print("You win! Well done, genius.")
+	while state.countPegs() != 1:
+		state.print()
+		print("There are {} pegs remaining.".format(state.countPegs()))
+		moves = state.findAllValidMoves()
+		if not moves:
+			print("No more moves, you lose! There were {} pegs left.".format(state.countPegs()))
+			return
+		movesReadable = ", ".join([str(move) for move in moves])
+		print("The following moves are available: {}".format(movesReadable))
+		pick = eval(input("Which move would you like to perform? [0-{}]: ".format(len(moves) - 1)))
+		while pick < 0 or pick > len(moves) - 1:
+			print("Input out of range.")
+			print("The following moves are available: {}".format(movesReadable))
+			pick = eval(input("Which move would you like to perform? [0-{}]: ".format(len(moves) - 1)))
+		move = moves[pick]
+		state.perform(move)
+	print("You win! Well done, genius.")
 
 def traverseMoves(state):
- 	moves = state.moves
- 	exampleState = PegState([], []).constructStartState()
- 	exampleState.graph[0][0].hasPeg = False
- 	while moves:
- 	 	move = moves.pop(0)
- 	 	exampleState.print()
- 	 	print("Next move to be performed: {}->{}. Press enter to continue.".format(move.fromPos, move.toPos))
- 	 	input("")
- 	 	exampleState.perform(move)
- 	exampleState.print()
- 	print("All done!")
+	moves = state.moves
+	exampleState = PegState([], []).constructStartState()
+	exampleState.graph[0][0].hasPeg = False
+	while moves:
+		move = moves.pop(0)
+		exampleState.print()
+		print("Next move to be performed: {}->{}. Press enter to continue.".format(move.fromPos, move.toPos))
+		input("")
+		exampleState.perform(move)
+	exampleState.print()
+	print("All done!")
 
 if __name__ == "__main__":
 	parser = argparse.ArgumentParser(description="Cracker Barrel Puzzle Simulator")
