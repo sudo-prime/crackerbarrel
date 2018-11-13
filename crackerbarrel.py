@@ -40,7 +40,7 @@ class PegState:
                                          "o" if self.graph[4][2].hasPeg else ".",
                                          "o" if self.graph[4][3].hasPeg else ".",
                                          "o" if self.graph[4][4].hasPeg else "."))
-        print("   0 1 2 3 4")
+        print("  0 1 2 3 4")
 
     def constructStartState(self):
         # Create all hole objects
