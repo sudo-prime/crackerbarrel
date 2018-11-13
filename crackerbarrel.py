@@ -163,6 +163,7 @@ def manual(state):
             pick = eval(input("Which move would you like to perform? [0-{}]: ".format(len(moves) - 1)))
         move = moves[pick]
         state.perform(move)
+    state.print()
     print("You win! Well done, genius.")
 
 def traverseMoves(state):
